@@ -1,23 +1,23 @@
 package com.ningxia.wine.test;
 
-import org.apache.commons.lang.math.RandomUtils;
-
 import com.google.gson.Gson;
 import com.ningxia.wine.util.HttpClientUtil;
 
 public class MainTest {
     //登录接口
-	public static final String loginUrl = "http://127.0.0.1:8080/ningxia_wine/login/checkLogin";
+	public static final String LOGIN_URL = "http://127.0.0.1:8080/ningxia_wine/login/checkLogin";
 	
 	//退出接口
-	public static final String loginOutUrl = "http://127.0.0.1:8080/ningxia_wine/login/loginOut";
+	public static final String LOGIN_OUTURL = "http://127.0.0.1:8080/ningxia_wine/login/loginOut";
 	
 	//T402添加接口
-	public static final String t402_add="http://127.0.0.1:8080/ningxia_wine/t402report/add";
+	public static final String T402_ADD="http://127.0.0.1:8080/ningxia_wine/t402report/add";
 	
 	//T402查询接口
-	public static final String t402_query="http://127.0.0.1:8080/ningxia_wine/t402report/query";
+	public static final String T402_QUERY="http://127.0.0.1:8080/ningxia_wine/t402report/query";
 
+	public static final String QUERY_ALL_GSNAMES="http://127.0.0.1:8080/ningxia_wine/user/getAllGsnames";
+	
 	private static Gson gson=new Gson();
 	
 	public static void main(String[] args) {
@@ -25,13 +25,30 @@ public class MainTest {
 		String sessionId="admin_123456789111111";
 		System.out.println(sessionId);
 		
-		//testLogin(sessionId);
+	/*	testLogin(sessionId);*/
+		
+		testQueryAllGsname(sessionId);
 		
 		//testAdd(sessionId);
 		
 		//testQuery(sessionId);
 		
-		testLoginOut(sessionId);
+		/*testLoginOut(sessionId);*/
+	}
+	
+	public static void testQueryAllGsname(String sessionId){
+		QueryAllGsNameReq req=new QueryAllGsNameReq();
+		req.setSessionId(sessionId);
+		String reqJson = gson.toJson(req);
+		System.out.println("reqJson:"+reqJson);
+		try {
+			String resp=HttpClientUtil.postRequest(QUERY_ALL_GSNAMES, reqJson);
+			System.out.println("resp=====:"+resp);
+			QueryAllGsNameResp loginResp = gson.fromJson(resp,
+					QueryAllGsNameResp.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -42,7 +59,7 @@ public class MainTest {
 		String reqJson = gson.toJson(req);
 		System.out.println("reqJson:"+reqJson);
 		try {
-			String resp=HttpClientUtil.postRequest(loginOutUrl, reqJson);
+			String resp=HttpClientUtil.postRequest(LOGIN_OUTURL, reqJson);
 			System.out.println("resp=====:"+resp);
 			LoginOutResp loginResp = gson.fromJson(resp,
 					LoginOutResp.class);
@@ -69,7 +86,7 @@ public class MainTest {
 		String reqJson = gson.toJson(req);
 		System.out.println("reqJson:"+reqJson);
 		try {
-			String resp=HttpClientUtil.postRequest(loginUrl, reqJson);
+			String resp=HttpClientUtil.postRequest(LOGIN_URL, reqJson);
 			System.out.println("resp=====:"+resp);
 			LoginResp loginResp = gson.fromJson(resp,
 					LoginResp.class);
@@ -106,7 +123,7 @@ public class MainTest {
 		String reqJson = gson.toJson(req);
 		System.out.println("reqJson:"+reqJson);
 		try {
-			String resp=HttpClientUtil.postRequest(t402_add, reqJson);
+			String resp=HttpClientUtil.postRequest(T402_ADD, reqJson);
 			System.out.println("resp=====:"+resp);
 			T402AddResp loginResp = gson.fromJson(resp,
 					T402AddResp.class);
@@ -174,7 +191,7 @@ public class MainTest {
 		String reqJson = gson.toJson(req);
 		System.out.println("reqJson:"+reqJson);
 		try {
-			String resp=HttpClientUtil.postRequest(t402_query, reqJson);
+			String resp=HttpClientUtil.postRequest(T402_QUERY, reqJson);
 			System.out.println("resp=====:"+resp);
 			
 			T402QueryResp loginResp = gson.fromJson(resp,

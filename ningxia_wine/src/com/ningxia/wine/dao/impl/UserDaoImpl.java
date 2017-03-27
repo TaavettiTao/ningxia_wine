@@ -49,4 +49,20 @@ public class UserDaoImpl implements UserDao {
 		}
 		return CollectionUtils.isEmpty(users)?null:users.get(0);
 	}
+	
+	public List<String> findAllGsname() throws DataBaseException{
+		List<String> gsnames=null;
+		try {
+			String sql = "select gsname from t_user where gsname is not null group by gsname";
+			gsnames = jdbcTemplate.query(sql, new Object[]{}, new RowMapper<String>() {
+				// rs是每行记录，index是行号
+				public String mapRow(ResultSet rs, int index) throws SQLException {
+					return rs.getString("gsname");
+				}
+			});
+		} catch (Exception e) {
+			throw new DataBaseException(e.getMessage());
+		}
+		return gsnames;
+	}
 }

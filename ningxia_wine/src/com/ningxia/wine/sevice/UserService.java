@@ -1,5 +1,7 @@
 package com.ningxia.wine.sevice;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ public class UserService {
 	
 	public TUser findByUsername(String username) throws DataBaseException{
 		return userDao.findUsername(username);
+	}
+	
+	public List<String> findAllGsname() throws DataBaseException{
+		return userDao.findAllGsname();
 	}
 
 }
